@@ -11,9 +11,7 @@ int led7segNumbers[LED7SEG_BLOCK_NUMBER] = {0};
 
 static int led7segIndex = 0;
 static int led7segOffset = 0;
-
-static uint16_t led7segPins[LED7SEG_NUMBER]
-							= {LED7SEG_0_Pin, LED7SEG_1_Pin, LED7SEG_2_Pin, LED7SEG_3_Pin};
+static uint16_t led7segPins[LED7SEG_NUMBER] = {LED7SEG_0_Pin, LED7SEG_1_Pin, LED7SEG_2_Pin, LED7SEG_3_Pin};
 
 static uint16_t led7segNum0s[11] = {0xBF, 0x86, 0xDB, 0xCF, 0xE6, 0xED, 0xFD, 0x87, 0xFF, 0xEF, 0x00};
 static uint16_t led7segNum1s[11] = {0x40, 0x79, 0x24, 0x30, 0x19, 0x12, 0x02, 0x78, 0x00, 0x10, 0xFF};
@@ -87,4 +85,5 @@ void led7segScanning(void) {
 		}
 	}
 }
+
 

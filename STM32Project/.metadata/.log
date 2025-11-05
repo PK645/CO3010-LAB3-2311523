@@ -20,3 +20,6 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/khanh
 
 !ENTRY org.eclipse.cdt.core 1 0 2025-11-05 10:15:36.846
 !MESSAGE Indexed 'LAB3' (17 sources, 78 headers) in 5.75 sec: 3,636 declarations; 13,164 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.012%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-11-05 10:23:46.257
+!MESSAGE Indexed 'BUTTONS_SWITCHES' (18 sources, 128 headers) in 2.11 sec: 8,145 declarations; 27,226 references; 2 unresolved inclusions; 36 syntax errors; 188 unresolved names (0.53%)

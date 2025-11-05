@@ -12,7 +12,7 @@
 #include <stdint.h>
 
 #define TIMER_NUMBER        4
-#define TIME_DURATION      10   // tick logic cố định 10 ms
+#define TIMER_DURATION      10   // tick logic cố định 10 ms
 
 extern uint8_t timerFlags[TIMER_NUMBER];
 

@@ -23,7 +23,7 @@ void timerSet(int ticks, int index) {
 void timerSetMs(int duration_ms, int index) {
     if (duration_ms < 0) duration_ms = 0;
     // Quy đổi ms -> số tick logic (ceil)
-    int ticks = (duration_ms + TIME_DURATION - 1) / TIME_DURATION;
+    int ticks = (duration_ms + TIMER_DURATION - 1) / TIMER_DURATION;
     timerSet(ticks, index);
 }
 
@@ -43,8 +43,8 @@ void timerRun(void) {
    actual_ms là chu kỳ ngắt thật (1, 10, 100...) */
 void timerOnIsrElapsed(uint32_t actual_ms) {
     accum_ms += actual_ms;
-    while (accum_ms >= TIME_DURATION) {
-        accum_ms -= TIME_DURATION;
+    while (accum_ms >= TIMER_DURATION) {
+        accum_ms -= TIMER_DURATION;
         timerRun();               // phát 1 tick logic = 10 ms
     }
 }

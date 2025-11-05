@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2023 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -67,7 +66,6 @@ static void MX_TIM2_Init(void);
   */
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -92,13 +90,17 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT(&htim2);
+  HAL_TIM_Base_Start_IT (&htim2);
+  led7segInit();
+  fsmInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  led7segScanning();
+	  fsmProcessing();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -195,9 +197,8 @@ static void MX_TIM2_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-  /* USER CODE END MX_GPIO_Init_1 */
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -205,7 +206,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, TRAFFIC0_GREEN_Pin|TRAFFIC1_RED_Pin|TRAFFIC1_AMBER_Pin|TRAFFIC1_GREEN_Pin
-                          |LED7SEG_0_Pin|LED7SEG_1_Pin|LEDG7SEG_2_Pin|LED7SEG_3_Pin
+                          |LED7SEG_0_Pin|LED7SEG_1_Pin|LED7SEG_2_Pin|LED7SEG_3_Pin
                           |TRAFFIC0_RED_Pin|TRAFFIC0_AMBER_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
@@ -215,17 +216,17 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pins : BUTTON_0_Pin BUTTON_1_Pin BUTTON_2_Pin BUTTON_3_Pin */
   GPIO_InitStruct.Pin = BUTTON_0_Pin|BUTTON_1_Pin|BUTTON_2_Pin|BUTTON_3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : TRAFFIC0_GREEN_Pin TRAFFIC1_RED_Pin TRAFFIC1_AMBER_Pin TRAFFIC1_GREEN_Pin
-                           LED7SEG_0_Pin LED7SEG_1_Pin LEDG7SEG_2_Pin LED7SEG_3_Pin
+                           LED7SEG_0_Pin LED7SEG_1_Pin LED7SEG_2_Pin LED7SEG_3_Pin
                            TRAFFIC0_RED_Pin TRAFFIC0_AMBER_Pin */
   GPIO_InitStruct.Pin = TRAFFIC0_GREEN_Pin|TRAFFIC1_RED_Pin|TRAFFIC1_AMBER_Pin|TRAFFIC1_GREEN_Pin
-                          |LED7SEG_0_Pin|LED7SEG_1_Pin|LEDG7SEG_2_Pin|LED7SEG_3_Pin
+                          |LED7SEG_0_Pin|LED7SEG_1_Pin|LED7SEG_2_Pin|LED7SEG_3_Pin
                           |TRAFFIC0_RED_Pin|TRAFFIC0_AMBER_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
@@ -234,18 +235,16 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = LED7SEG_A_Pin|LED7SEG_B_Pin|LED7SEG_C_Pin|LED7SEG_D_Pin
                           |LED7SEG_E_Pin|LED7SEG_F_Pin|LED7SEG_G_Pin|LED7SEG_DP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	timerRun();
 	buttonReading();
 }
@@ -265,7 +264,8 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-#ifdef USE_FULL_ASSERT
+
+#ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

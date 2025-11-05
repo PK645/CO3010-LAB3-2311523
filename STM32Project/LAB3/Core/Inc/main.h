@@ -93,8 +93,8 @@ void Error_Handler(void);
 #define LED7SEG_0_GPIO_Port GPIOB
 #define LED7SEG_1_Pin GPIO_PIN_5
 #define LED7SEG_1_GPIO_Port GPIOB
-#define LEDG7SEG_2_Pin GPIO_PIN_6
-#define LEDG7SEG_2_GPIO_Port GPIOB
+#define LED7SEG_2_Pin GPIO_PIN_6
+#define LED7SEG_2_GPIO_Port GPIOB
 #define LED7SEG_3_Pin GPIO_PIN_7
 #define LED7SEG_3_GPIO_Port GPIOB
 #define TRAFFIC0_RED_Pin GPIO_PIN_8
